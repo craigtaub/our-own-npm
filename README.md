@@ -7,7 +7,7 @@
 ## Mongo
 
 Simple (no auth)
-```
+```js
 use testdb
 db.createCollection('users', {})
 show collections
@@ -17,7 +17,7 @@ db.users.find()
 ```
 
 Create auth
-```
+```js
 use admin
 db.createUser({
   user: "root",

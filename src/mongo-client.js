@@ -1,9 +1,10 @@
+const { connect } = require('mongodb');
+
 const MongoClient = require('mongodb').MongoClient;
 
 const url = 'mongodb://mongodb_container:27017';
 
-async function findOne() {
-
+const connectClient = async () => {
   const client = await MongoClient
     .connect(url, { useNewUrlParser: true })
     .then((lib) => {
@@ -16,6 +17,13 @@ async function findOne() {
     console.log('no client');
     return;
   }
+
+  return client;
+};
+
+async function findOne() {
+
+  const client = await connectClient();
 
   try {
 
@@ -36,6 +44,9 @@ async function findOne() {
   }
 }
 
+async function write() {
+  
+}
 module.exports = {
   findOne
 }
