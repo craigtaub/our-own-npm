@@ -1,7 +1,5 @@
 const express = require("express");
-
-// await
-const { findOne } = require("./mongo-client");
+const { findOne, getCollection, write } = require("./mongo-client");
 
 // Constants
 const PORT = 3000;
@@ -10,7 +8,10 @@ const HOST = "0.0.0.0";
 // App
 const app = express();
 app.get("/", async (req, res) => {
-  const result = await findOne();
+  const collection = await getCollection();
+
+  await write(collection);
+  const result = await findOne(collection);
   console.log("server result: ", result);
   res.send(`Hello World ${result.meta}`);
 });
