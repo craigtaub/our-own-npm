@@ -1,20 +1,21 @@
-const { connect } = require('mongodb');
+const { connect } = require("mongodb");
 
-const MongoClient = require('mongodb').MongoClient;
+const MongoClient = require("mongodb").MongoClient;
 
-const url = 'mongodb://mongodb_container:27017';
+const url = "mongodb://mongodb_container:27017";
 
 const connectClient = async () => {
-  const client = await MongoClient
-    .connect(url, { useNewUrlParser: true })
+  const client = await MongoClient.connect(url, { useNewUrlParser: true })
     .then((lib) => {
-      console.log('MongoDB Connected')
+      console.log("MongoDB Connected");
       return lib;
     })
-    .catch(err => { console.log(err); });
+    .catch((err) => {
+      console.log(err);
+    });
 
   if (!client) {
-    console.log('no client');
+    console.log("no client");
     return;
   }
 
@@ -22,21 +23,18 @@ const connectClient = async () => {
 };
 
 async function findOne() {
-
   const client = await connectClient();
 
   try {
-
-    console.log('connect db');
+    console.log("connect db");
     const db = client.db("testdb");
-    let collection = db.collection('users');
-    console.log('query');
-    let query = { name: 'Bill' }
+    let collection = db.collection("users");
+    console.log("query");
+    let query = { name: "Bill" };
     let res = await collection.findOne(query);
     // let res = await collection.find();
-    console.log('client result: ', res);
+    console.log("client result: ", res);
     return res;
-
   } catch (err) {
     console.log(err);
   } finally {
@@ -44,9 +42,7 @@ async function findOne() {
   }
 }
 
-async function write() {
-  
-}
+async function write() {}
 module.exports = {
-  findOne
-}
+  findOne,
+};
