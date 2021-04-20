@@ -13,7 +13,7 @@ app.get("/", async (req, res) => {
   await write(collection);
   const result = await findOne(collection);
   console.log("server result: ", result);
-  res.send(`Hello World ${result.meta}`);
+  res.send(`Hello website World ${result.meta}`);
 });
 
 app.listen(PORT, HOST);

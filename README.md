@@ -1,9 +1,5 @@
 # Our own npm
 
-`mongodb` -> Registry
-`src` -> Website
-`bin` -> CLI
-
 ## Tarball
 
 > tar -zcvf mongo-src.tar.gz src/
