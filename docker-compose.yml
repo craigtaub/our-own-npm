@@ -1,13 +1,34 @@
-version: '2.0'
+version: "3.0"
 
 services:
   web:
-    build: .
+    # build:
+    #   - context: packages/website
+    #   - dockerfile: Dockerfile
+    build: packages/website
     ports:
       - "3000:3000"
+      # # for ssh/scp
+      # - "22:22"
     restart: always
     volumes:
-      - ./:/usr/src/app
+      - ./packages/website:/usr/src/app
+
+  # storage:
+  #   # SSH in alpine
+  #   # image: alpine:latest
+  #   image: buildo/alpine-ssh
+  #   # keep container running
+  #   command: tail -f /dev/null
+  #   # tty: true # didnt work with alpine-ssh
+
+  api:
+    build: packages/api
+    ports:
+      - "4000:4000"
+    restart: always
+    volumes:
+      - ./packages/api:/usr/src/app
   mongodb_container:
     image: mongo:latest
     ports:

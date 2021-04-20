@@ -1,1 +1,3 @@
-node_modules
+packages/website/node_modules
+packages/cli/node_modules
+packages/api/node_modules

@@ -16,18 +16,25 @@ stop:
 down:
 	docker-compose down
 
-connect-db:
-	mongo admin -u root -p rootpassword
-
 remove:
 	docker-compose rm
 
-web-app:
-	docker run -p 3000:3000 ourownnpm_web
+# connect-db:
+# 	mongo admin -u root -p rootpassword
 
-mongo:
-	docker exec -it ourownnpm_mongodb_container_1 mongo
+# web-app:
+# 	docker run -p 3000:3000 ourownnpm_web
+
+# mongo:
+	# docker exec -it ourownnpm_mongodb_container_1 mongo
 	# docker-compose exec ourownnpm_mongodb_container_1 bash
 
-mongo-ssh:
-	docker exec -it ourownnpm_mongodb_container_1 bash
+ssh-web:
+	# docker exec -it our-own-npm_web_1 bash 
+	docker exec -it our-own-npm_web_1 /bin/sh
+
+ssh-mongo:
+	docker exec -it our-own-npm_mongodb_container_1 bash
+
+# ssh-storage:
+# 	docker exec -it our-own-npm_storage_1 bash
