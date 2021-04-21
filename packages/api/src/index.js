@@ -1,4 +1,5 @@
 const express = require("express");
+const tar = require("tar");
 
 // Constants
 const PORT = 4000;
@@ -46,6 +47,17 @@ app.post("/upload", async (req, res) => {
   if (req.file == undefined) {
     return res.status(400).send({ message: "Please upload a file!" });
   }
+
+  // unzip file
+  console.log("req.file", req.file.path);
+  await tar.x(
+    {
+      gzip: true,
+      // file: `${repoName}.tar.gz`,
+      cwd: process.cwd(),
+    },
+    [req.file.path]
+  );
 
   res.status(200).send({
     message: "Uploaded the file successfully: " + req.file.originalname,

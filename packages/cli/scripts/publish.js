@@ -22,11 +22,9 @@ async function sendPackage(repoName) {
   };
 
   return fetch(apiUrl, { ...options })
-    .then((res) => {
-      if (res.ok) {
-        console.log("SENT OK");
-      }
-      // throw res;
+    .then((res) => res.json())
+    .then((json) => {
+      console.log(`API response: "${json.message}"`);
     })
     .catch((error) => {
       console.log("ERROR: ", error);
@@ -49,7 +47,7 @@ async function packageRepo(repoName) {
 }
 
 async function run() {
-  const repoName = process.cwd().split("/").pop();
+  const repoName = require(`${process.cwd()}/package.json`).name;
 
   await packageRepo(repoName);
 

@@ -1,20 +1,6 @@
 # Our own npm
 
-## Tarball
-
-> tar -zcvf mongo-src.tar.gz src/
-
-## SCP
-
-From "storage"
-
-> scp web:/usr/src/app/mongo-src.tar.gz /home/mongo-src.tar.gz
-
-From "web"
-
-> scp /usr/src/app/mongo-src.tar.gz storage:/home/mongo-src.tar.gz
-
-## Mongo
+## Mongo basics
 
 Simple (no auth)
 
