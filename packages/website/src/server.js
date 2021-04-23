@@ -10,10 +10,10 @@ const app = express();
 app.get("/", async (req, res) => {
   const collection = await getCollection();
 
-  await write(collection);
+  // await write(collection);
   const result = await findOne(collection);
   console.log("server result: ", result);
-  res.send(`Hello website World ${result.meta}`);
+  res.send(`Hello website World ${result.readmeContents}`);
 });
 
 app.listen(PORT, HOST);

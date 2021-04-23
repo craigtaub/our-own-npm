@@ -2,6 +2,11 @@ const express = require("express");
 const tar = require("tar");
 const fs = require("fs");
 const rimraf = require("rimraf");
+const { promisify } = require("util");
+
+const { getCollection, write } = require("./mongo-client");
+
+const readFileAsync = promisify(fs.readFile);
 
 // Constants
 const PORT = 4000;
@@ -74,7 +79,17 @@ app.post("/upload", async (req, res) => {
   }
 
   // details from package
-  console.log(require(`${zipExtractFolder}/package.json`).name);
+  const pkgName = require(`${zipExtractFolder}/package.json`).name;
+  const readmeContents = await readFileAsync(`${zipExtractFolder}/README.md`, {
+    encoding: "utf8",
+  });
+  console.log("pkgName", pkgName);
+  console.log("readme", readmeContents);
+  // send to mongo
+  const collection = await getCollection();
+  const data = { packageName: pkgName, readmeContents };
+  await write(collection, data);
+
   // remove tmp folder
   rimraf.sync(zipExtractFolder);
 
