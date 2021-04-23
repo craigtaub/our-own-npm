@@ -33,13 +33,14 @@ async function sendPackage(repoName) {
 
 async function packageRepo(repoName) {
   try {
-    await tar.c(
+    await tar.create(
       {
         gzip: true,
         file: `${repoName}.tar.gz`,
         cwd: process.cwd(),
       },
-      [`../${repoName}`] // grab name of repo
+      ["./"]
+      // [`../${repoName}`] // grab name of repo
     );
   } catch (e) {
     console.log("gzip ERROR: ", e.message);

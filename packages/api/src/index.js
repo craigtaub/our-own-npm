@@ -1,5 +1,7 @@
 const express = require("express");
 const tar = require("tar");
+const fs = require("fs");
+const rimraf = require("rimraf");
 
 // Constants
 const PORT = 4000;
@@ -48,16 +50,33 @@ app.post("/upload", async (req, res) => {
     return res.status(400).send({ message: "Please upload a file!" });
   }
 
-  // unzip file
-  console.log("req.file", req.file.path);
-  await tar.x(
-    {
-      gzip: true,
-      // file: `${repoName}.tar.gz`,
-      cwd: process.cwd(),
-    },
-    [req.file.path]
-  );
+  // unzip file into tmp folder
+  const file = req.file.filename;
+  console.log("req.file", file);
+  const zipExtractFolder = `${process.cwd()}/tmp`;
+  if (!fs.existsSync(zipExtractFolder)) {
+    // create temp extraction folder
+    fs.mkdirSync(zipExtractFolder);
+  }
+  try {
+    await tar.extract(
+      {
+        gzip: true,
+        file: `tarballs/${file}`,
+        // file: "tarballs/test-package.tar.gz", // test
+        cwd: zipExtractFolder, // current extract
+      }
+      // [`tarballs/${file}`]
+    );
+    console.log("Extract complete");
+  } catch (e) {
+    console.log("Extract error: ", e.message);
+  }
+
+  // details from package
+  console.log(require(`${zipExtractFolder}/package.json`).name);
+  // remove tmp folder
+  rimraf.sync(zipExtractFolder);
 
   res.status(200).send({
     message: "Uploaded the file successfully: " + req.file.originalname,
