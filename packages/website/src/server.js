@@ -1,5 +1,6 @@
 const express = require("express");
 const { findOne, getCollection, write } = require("./mongo-client");
+const showdown = require("showdown");
 
 // Constants
 const PORT = 3000;
@@ -15,7 +16,9 @@ app.get("/packages/:packageName", async (req, res) => {
   const result = await findOne(collection, packageName);
   console.log("server result: ", result);
   if (result) {
-    res.send(`${result.readmeContents}`);
+    const converter = new showdown.Converter();
+    const html = converter.makeHtml(result.readmeContents);
+    res.send(html);
   } else {
     res.send(`No package found`);
   }
