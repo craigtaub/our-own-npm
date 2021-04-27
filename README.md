@@ -6,12 +6,12 @@ Simple (no auth)
 
 ```js
 use testdb
-db.createCollection('users', {})
+db.createCollection('packages', {})
 show collections
-db.users.insert({name: 'Bill', meta: 'craig worked'})
-db.users.findOne({name: 'Bill'})
-db.users.find()
-db.users.remove({name: 'Bill'})
+db.packages.insert({name: 'Bill', meta: 'craig worked'})
+db.packages.findOne({name: 'Bill'})
+db.packages.find()
+db.packages.remove({name: 'Bill'})
 ```
 
 Create auth

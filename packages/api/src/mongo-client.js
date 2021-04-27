@@ -20,7 +20,7 @@ const getCollection = async () => {
   }
 
   const db = client.db("testdb");
-  const collection = db.collection("users");
+  const collection = db.collection("packages");
 
   return collection;
 };

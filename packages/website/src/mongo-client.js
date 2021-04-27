@@ -20,7 +20,7 @@ const getCollection = async () => {
   }
 
   const db = client.db("testdb");
-  const collection = db.collection("users");
+  const collection = db.collection("packages");
 
   return collection;
 };
@@ -33,10 +33,10 @@ async function write(collection) {
   }
 }
 
-async function findOne(collection) {
+async function findOne(collection, packageName) {
   try {
     // let query = { name: "Ryan" };
-    let query = { packageName: "example-repo" };
+    let query = { packageName }; // : "example-lib" };
     let res = await collection.findOne(query);
     console.log("client result: ", res);
     return res;
