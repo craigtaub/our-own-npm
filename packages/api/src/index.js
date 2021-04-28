@@ -44,6 +44,11 @@ let uploadFile = multer({
 }).single("file");
 let uploadFileMiddleware = util.promisify(uploadFile);
 
+app.get("/download/:packageName", (req, res) => {
+  const path = `${process.cwd()}/tarballs/${req.params.packageName}.tar.gz`;
+  res.download(path);
+});
+
 app.post("/upload", async (req, res) => {
   try {
     await uploadFileMiddleware(req, res);
@@ -57,7 +62,7 @@ app.post("/upload", async (req, res) => {
 
   // unzip file into tmp folder
   const file = req.file.filename;
-  console.log("req.file", file);
+
   const zipExtractFolder = `${process.cwd()}/tmp`;
   if (!fs.existsSync(zipExtractFolder)) {
     // create temp extraction folder
