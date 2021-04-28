@@ -21,3 +21,9 @@ ssh-mongo:
 
 ssh-api:
 	docker exec -it our-own-npm_api_1 /bin/sh
+
+reset:
+	rm packages/api/tarballs/example-lib.tar.gz
+	rm -rf packages/example-app/node_modules/example-lib
+	docker exec -it our-own-npm_mongodb_container_1 mongo --eval "db.packages.remove({})" testdb
+

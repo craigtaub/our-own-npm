@@ -10,7 +10,8 @@
 
 ## Example usage
 
-`make up`
+    > make up
+    > make reset
 
 ### 1. Check package on website
 
@@ -18,7 +19,7 @@
 
 ### 2. Publish package then check website
 
-- `cd ../../packages/example-lib`
+- `cd packages/example-lib`
 - `node ../cli/scripts/publish.js`
 - `ls ../api/tarballs` -> should list zipped package (`example-lib.tar.gz`)
 - `open http://localhost:3000/packages/example-lib`
