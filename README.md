@@ -1,26 +1,25 @@
 # Our own npm
 
-## Mongo basics
+- cli -> scripts to install or publish. connects to api
+- api -> connects to database.
+- website -> connects to api
 
-Simple (no auth)
+## Example usage
 
-```js
-use testdb
-db.createCollection('packages', {})
-show collections
-db.packages.insert({name: 'Bill', meta: 'craig worked'})
-db.packages.findOne({name: 'Bill'})
-db.packages.find()
-db.packages.remove({name: 'Bill'})
-```
+### 1. Check package on website
 
-Create auth
+- `open http://localhost:3000/packages/example-lib` -> see package does not exist
 
-```js
-use admin
-db.createUser({
-  user: "root",
-  pwd: "root",
-  roles: ["root"]
-})
-```
+### 2. Publish package then check website
+
+- `cd ../../packages/example-lib`
+- `node ../cli/scripts/publish.js`
+- `ls ../api/tarballs` -> should list zipped package (`example-lib.tar.gz`)
+- `open http://localhost:3000/packages/example-lib`
+
+### 3. Use package
+
+- `cd ../../packages/example-app`
+- `npm start` -> see missing package error
+- `node ../cli/scripts/install.js example-lib`
+- `npm start` -> WORKS
