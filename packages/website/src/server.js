@@ -1,5 +1,5 @@
 const express = require("express");
-const { findOne, getCollection, write } = require("./mongo-client");
+const { findOne, getCollection } = require("./mongo-client");
 const showdown = require("showdown");
 
 // Constants
@@ -12,7 +12,6 @@ app.get("/packages/:packageName", async (req, res) => {
   const packageName = req.params["packageName"];
   const collection = await getCollection();
 
-  // await write(collection);
   const result = await findOne(collection, packageName);
   console.log("server result: ", result);
   if (result) {

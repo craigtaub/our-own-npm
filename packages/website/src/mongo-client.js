@@ -25,17 +25,8 @@ const getCollection = async () => {
   return collection;
 };
 
-async function write(collection) {
-  try {
-    await collection.insert({ name: "Ryan", meta: "baby worked" });
-  } catch (err) {
-    console.log(err);
-  }
-}
-
 async function findOne(collection, packageName) {
   try {
-    // let query = { name: "Ryan" };
     let query = { packageName }; // : "example-lib" };
     let res = await collection.findOne(query);
     console.log("client result: ", res);
@@ -48,5 +39,4 @@ async function findOne(collection, packageName) {
 module.exports = {
   getCollection,
   findOne,
-  write,
 };
