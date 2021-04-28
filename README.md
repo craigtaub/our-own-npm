@@ -1,10 +1,12 @@
 # Our own npm
 
 - cli -> scripts to install or publish. connects to api
-- api -> connects to database.
+- api -> connects to database. Package zipped stored in filesystem.
 - website -> connects to api
 
 ## Example usage
+
+`make up`
 
 ### 1. Check package on website
 
