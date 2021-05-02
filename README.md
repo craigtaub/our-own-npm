@@ -26,7 +26,7 @@
 
 ### 3. Use package
 
-- `cd ../../packages/example-app`
+- `cd ../example-app`
 - `npm start` -> see missing package error
-- `node ../cli/scripts/install.js example-lib`
+- `node ../cli/scripts/install.js` -> install `ourDeps`
 - `npm start` -> WORKS

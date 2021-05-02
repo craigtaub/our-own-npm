@@ -35,14 +35,16 @@ async function downloadPackage(repoName) {
 }
 
 async function run() {
-  const myArgs = process.argv.slice(2);
-  const repoName = myArgs[0];
-  await downloadPackage(repoName);
+  const package = require(`${process.cwd()}/package.json`);
+  // process each dep
+  Object.keys(package.ourDeps).map(async (repoName) => {
+    await downloadPackage(repoName);
 
-  await extractPackage(repoName);
+    await extractPackage(repoName);
 
-  fs.unlinkSync(outputPath); // remove tar
-  console.log("downloaded");
+    fs.unlinkSync(outputPath); // remove tar
+    console.log(`Downloaded: ${repoName}`);
+  });
 }
 
 run();
