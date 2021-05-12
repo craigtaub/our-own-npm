@@ -14,13 +14,6 @@ services:
     volumes:
       - ./packages/website:/usr/src/app
 
-  api:
-    build: packages/api
-    ports:
-      - "4000:4000"
-    restart: always
-    volumes:
-      - ./packages/api:/usr/src/app
   couchdb_container:
     image: npmjs/npm-docker-couchdb:latest
     ports:

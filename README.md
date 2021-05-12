@@ -2,10 +2,9 @@
 
 ## Packages
 
-- `/cli` -> scripts to install or publish. connects to api
-- `/api` -> connects to database. Package zipped stored in filesystem.
-- `/website` -> connects to api
-- `/example-lib` -> an lib with a function which returns text
+- `/cli` -> scripts to install or publish. connects to CouchDB API
+- `/website` -> connects to CouchDB API
+- `/example-lib` -> a lib with a function which returns text
 - `/example-app` -> small express app which imports and prints `example-lib`
 
 ## Example usage
