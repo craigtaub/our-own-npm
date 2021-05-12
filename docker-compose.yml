@@ -14,14 +14,6 @@ services:
     volumes:
       - ./packages/website:/usr/src/app
 
-  # storage:
-  #   # SSH in alpine
-  #   # image: alpine:latest
-  #   image: buildo/alpine-ssh
-  #   # keep container running
-  #   command: tail -f /dev/null
-  #   # tty: true # didnt work with alpine-ssh
-
   api:
     build: packages/api
     ports:
@@ -29,12 +21,12 @@ services:
     restart: always
     volumes:
       - ./packages/api:/usr/src/app
-  mongodb_container:
-    image: mongo:latest
+  couchdb_container:
+    image: npmjs/npm-docker-couchdb:latest
     ports:
-      - 27017:27017
+      - 5984:5984
     volumes:
-      - mongodb_data_container:/data/db
+      - couchdb_data_container:/data/db
 
 volumes:
-  mongodb_data_container:
+  couchdb_data_container:

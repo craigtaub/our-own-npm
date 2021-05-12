@@ -16,8 +16,8 @@ remove:
 ssh-web:
 	docker exec -it our-own-npm_web_1 /bin/sh
 
-ssh-mongo:
-	docker exec -it our-own-npm_mongodb_container_1 bash
+ssh-couch:
+	docker exec -it our-own-npm_couchdb_container_1 bash
 
 ssh-api:
 	docker exec -it our-own-npm_api_1 /bin/sh
@@ -25,5 +25,5 @@ ssh-api:
 reset:
 	rm packages/api/tarballs/example-lib.tar.gz
 	rm -rf packages/example-app/node_modules/example-lib
-	docker exec -it our-own-npm_mongodb_container_1 mongo --eval "db.packages.remove({})" testdb
+	docker exec -it our-own-npm_couchdb_container_1 couch --eval "db.packages.remove({})" testdb
 

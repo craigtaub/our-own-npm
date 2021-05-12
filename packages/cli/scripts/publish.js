@@ -1,34 +1,54 @@
-const { createReadStream, statSync, unlinkSync } = require("fs");
-const fetch = require("node-fetch");
-const FormData = require("form-data");
-const { pipeline } = require("stream");
+const { unlinkSync, readFile } = require("fs");
 const tar = require("tar");
+const { promisify } = require("util");
+const nano = require("nano")("http://admin:admin@localhost:5984"); // works instead of basic auth
 
-const apiUrl = "http://localhost:4000/upload";
+const readFileAsync = promisify(readFile);
 
-async function sendPackage(repoName) {
-  const filePath = `${process.cwd()}/${repoName}.tar.gz`;
+// const apiUrl = "http://localhost:4000/upload";
+// const buiildApiUrl = (packageName) =>
+//   `http://localhost:5984/registry/_design/scratch/_rewrite/package/-/${packageName}`;
 
-  const form = new FormData();
-  const stats = statSync(filePath);
-  const fileSizeInBytes = stats.size;
-  const fileStream = createReadStream(filePath);
-  form.append("file", fileStream, { knownLength: fileSizeInBytes });
+async function sendPackage(repoName, readmeContents) {
+  const tarballName = `${repoName}.tar.gz`;
+  const filePath = `${process.cwd()}/${tarballName}`;
 
-  const options = {
-    method: "POST",
-    credentials: "include",
-    body: form,
-  };
+  const tarballData = await readFileAsync(filePath);
 
-  return fetch(apiUrl, { ...options })
-    .then((res) => res.json())
-    .then((json) => {
-      console.log(`API response: "${json.message}"`);
-    })
-    .catch((error) => {
-      console.log("ERROR: ", error);
-    });
+  const registry = nano.db.use("registry");
+  let response;
+  try {
+    const docName = repoName;
+
+    // response = await registry.multipart.insert(
+    //   // { foo: "bar" }, // doc
+    //   { happy: true },
+    //   [
+    //     // attachment
+    //     {
+    //       name: "tarballName.txt",
+    //       // name: tarballName,
+    //       data: "tarballData",
+    //       // content_type: "application/zip",
+    //       content_type: "text/plain",
+    //     },
+    //   ],
+    //   "docName" // doc id
+    // );
+
+    // tried with "registry.multipart.insert" but multipart errors
+    const response = await registry.insert({ readmeContents }, docName);
+    await registry.attachment.insert(
+      docName,
+      tarballName,
+      tarballData,
+      "application/zip",
+      { rev: response.rev }
+    );
+  } catch (e) {
+    console.log("ERROR:", e);
+  }
+  console.log("RESPONSE SUCCESS:", response);
 }
 
 async function packageRepo(repoName) {
@@ -50,9 +70,13 @@ async function packageRepo(repoName) {
 async function run() {
   const repoName = require(`${process.cwd()}/package.json`).name;
 
+  const readmeContents = await readFileAsync(`${process.cwd()}/README.md`, {
+    encoding: "utf8",
+  });
+
   await packageRepo(repoName);
 
-  await sendPackage(repoName);
+  await sendPackage(repoName, readmeContents);
 
   // remove file
   unlinkSync(`${repoName}.tar.gz`);
