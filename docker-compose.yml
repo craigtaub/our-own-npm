@@ -2,20 +2,15 @@ version: "3.0"
 
 services:
   web:
-    # build:
-    #   - context: packages/website
-    #   - dockerfile: Dockerfile
     build: packages/website
     ports:
       - "3000:3000"
-      # # for ssh/scp
-      # - "22:22"
     restart: always
     volumes:
       - ./packages/website:/usr/src/app
 
   couchdb_container:
-    image: npmjs/npm-docker-couchdb:latest
+    image: couchdb:1.6.1
     ports:
       - 5984:5984
     volumes:

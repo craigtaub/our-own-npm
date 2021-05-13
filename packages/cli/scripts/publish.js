@@ -1,13 +1,9 @@
 const { unlinkSync, readFile } = require("fs");
 const tar = require("tar");
 const { promisify } = require("util");
-const nano = require("nano")("http://admin:admin@localhost:5984"); // works instead of basic auth
+const nano = require("nano")("http://localhost:5984");
 
 const readFileAsync = promisify(readFile);
-
-// const apiUrl = "http://localhost:4000/upload";
-// const buiildApiUrl = (packageName) =>
-//   `http://localhost:5984/registry/_design/scratch/_rewrite/package/-/${packageName}`;
 
 async function sendPackage(repoName, readmeContents) {
   const tarballName = `${repoName}.tar.gz`;
@@ -19,22 +15,6 @@ async function sendPackage(repoName, readmeContents) {
   let response;
   try {
     const docName = repoName;
-
-    // response = await registry.multipart.insert(
-    //   // { foo: "bar" }, // doc
-    //   { happy: true },
-    //   [
-    //     // attachment
-    //     {
-    //       name: "tarballName.txt",
-    //       // name: tarballName,
-    //       data: "tarballData",
-    //       // content_type: "application/zip",
-    //       content_type: "text/plain",
-    //     },
-    //   ],
-    //   "docName" // doc id
-    // );
 
     // tried with "registry.multipart.insert" but multipart errors
     const response = await registry.insert({ readmeContents }, docName);

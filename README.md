@@ -10,6 +10,7 @@
 ## Example usage
 
     > make up
+    > make db
     > make reset
 
 ### 1. Check package on website
