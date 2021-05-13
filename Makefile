@@ -24,7 +24,7 @@ ssh-couch:
 
 reset:
 	curl -X DELETE \
-		'http://localhost:5984/registry'
+		'http://localhost:5984/registry' \
 		-H 'content-type: application/json'
 	rm -rf packages/example-app/node_modules/example-lib
 	# to delete just package using ref
