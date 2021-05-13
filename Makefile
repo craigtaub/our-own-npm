@@ -20,9 +20,9 @@ ssh-couch:
 	docker exec -it our-own-npm_couchdb_container_1 bash
 
 reset:
+	# delete package using ref
 	curl -X DELETE \
-		'http://localhost:5984/registry/example-lib?rev=2-af1e27bbc64d719c79c1a4dd7e7c6323' \
+		'http://localhost:5984/registry/example-lib?rev=$(shell curl 'http://localhost:5984/registry/example-lib' -H 'content-type: application/json' 2>/dev/null | jq --raw-output ._rev)' \
 		-H 'authorization: Basic YWRtaW46YWRtaW4=' \
 		-H 'content-type: application/json'
 	rm -rf packages/example-app/node_modules/example-lib
-

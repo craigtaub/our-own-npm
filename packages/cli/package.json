@@ -13,6 +13,7 @@
   "license": "ISC",
   "dependencies": {
     "nano": "^9.0.3",
+    "node-fetch": "^2.6.1",
     "tar": "^6.1.0"
   }
 }

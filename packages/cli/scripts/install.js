@@ -5,7 +5,7 @@ const tar = require("tar");
 const fs = require("fs");
 
 const writeFilePromise = promisify(writeFile);
-const apiUrl = "http://localhost:4000/download/";
+const apiUrl = "http://localhost:5984/registry";
 
 const outputPath = `${process.cwd()}/tmp.tar.gz`;
 
@@ -28,7 +28,7 @@ async function extractPackage(repoName) {
   }
 }
 async function downloadPackage(repoName) {
-  return fetch(apiUrl + repoName)
+  return fetch(`${apiUrl}/${repoName}/${repoName}.tar.gz`)
     .then((x) => x.arrayBuffer())
     .then((x) => writeFilePromise(outputPath, Buffer.from(x)))
     .catch((e) => console.log("Download Error: ", e.message));
