@@ -1,16 +1,16 @@
 {
-  "name": "cli",
+  "name": "our-npm-cli",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "init": "node scripts/init.js",
-    "install": "node scripts/install.js",
-    "publish": "node scripts/publish.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
   "license": "ISC",
+  "bin": {
+    "our-npm-install": "./scripts/install.js",
+    "our-npm-publish": "./scripts/publish.js"
+  },
   "dependencies": {
     "nano": "^9.0.3",
     "node-fetch": "^2.6.1",

@@ -10,23 +10,28 @@
 ## Example usage
 
     > make up
-    > make db
     > make reset
 
 ### 1. Check package on website
 
 - `GET http://localhost:3000/packages/example-lib` -> see package does not exist
 
-### 2. Publish package then check website
+### 2. Setup database and CLI
 
-- `cd packages/example-lib`
-- `node ../cli/scripts/publish.js`
-- `GET http://localhost:5984/registry/example-lib/example-lib.tar.gz` -> registry package tarball
+- `make db`
+- `cd packages/cli`
+- `npm install -g .` -> install 2 CLI scripts globally (see `bin` inside `package.json`)
+
+### 3. Publish package then check website
+
+- `cd ../example-lib`
+- `our-npm-publish` -> publish the `example-lib` package to registry
+- `GET http://localhost:5984/registry/example-lib/example-lib.tar.gz` -> registry tarball package tarball
 - `GET http://localhost:3000/packages/example-lib` -> package README on website
 
-### 3. Use package
+### 4. Use package
 
 - `cd ../example-app`
 - `npm start` -> see missing package error
-- `node ../cli/scripts/install.js` -> install packages from `package.json` -> `ourDeps` list
+- `our-npm-install` -> install packages from `package.json` -> `ourDeps` list
 - `npm start` -> package found, now it works

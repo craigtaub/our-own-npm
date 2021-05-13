@@ -27,6 +27,7 @@ reset:
 		'http://localhost:5984/registry' \
 		-H 'content-type: application/json'
 	rm -rf packages/example-app/node_modules/example-lib
+	cd packages/cli && npm uninstall -g our-npm-cli
 	# to delete just package using ref
 	# curl -X DELETE \
 	# 	'http://localhost:5984/registry/example-lib?rev=$(shell curl 'http://localhost:5984/registry/example-lib' -H 'content-type: application/json' 2>/dev/null | jq --raw-output ._rev)' \

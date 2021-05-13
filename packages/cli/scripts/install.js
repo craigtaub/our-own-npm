@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const fetch = require("node-fetch");
 const { writeFile } = require("fs");
 const { promisify } = require("util");

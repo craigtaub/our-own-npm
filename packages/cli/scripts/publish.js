@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const { unlinkSync, readFile } = require("fs");
 const tar = require("tar");
 const { promisify } = require("util");
