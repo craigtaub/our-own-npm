@@ -13,8 +13,3 @@ services:
     image: couchdb:1.6.1
     ports:
       - 5984:5984
-    volumes:
-      - couchdb_data_container:/data/db
-
-volumes:
-  couchdb_data_container:
