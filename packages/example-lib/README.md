@@ -9,4 +9,4 @@ lib();
 
 ## Publish library
 
-> > our-npm-publish
+    > our-npm-publish

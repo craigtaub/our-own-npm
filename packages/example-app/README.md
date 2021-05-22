@@ -6,4 +6,4 @@ Requires `example-lib` to work.
 
 ## Install library
 
-> our-npm-install
+    > our-npm-install
