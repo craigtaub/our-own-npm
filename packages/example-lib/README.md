@@ -9,4 +9,4 @@ lib();
 
 ## Publish library
 
-> node ../cli/scripts/publish.js
+> > our-npm-publish
